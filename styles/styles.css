@@ -3,13 +3,16 @@
   --color-primary: #ffffff; /* Primary */
   --color-primary-1: #333333; /* Primary 1 */
   --color-secondary: #f5f5f598; /* Secondary */
-  --color-secondary-1: #1e90ff; /* Secondary 1 */
+  --color-secondary-1: #1570ca; /* Secondary 1 */
   --color-text: #000000; /* Text */
   --color-text-1: #808080; /* Text 1 */
   --color-button: #007bff; /* Button */
   --color-button-1: #00ff00; /* Button 1 */
   --gradient: linear-gradient(-135deg, #e2e2e2, #b2d2f1);
   --box-shadow: 3px 2px 10px 0px #2b2b2b36;
+  --base-font-size: clamp(12px, 1.2vw, 32px);
+  --h2-font-size: calc(var(--base-font-size) * 1.618);
+  --h1-font-size: calc(var(--h2-font-size) * 1.618);
 }
 
 .dark-mode {
@@ -30,8 +33,21 @@
   font-family: "Raleway", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
-  font-size: clamp(12px, 1.2vw, 32px);
+  font-size: var(--base-font-size);
   transition: all 0.3s ease;
+  color: var(--color-text);
+}
+
+p {
+  font-size: var(--base-font-size);
+}
+
+h2 {
+  font-size: var(--h2-font-size);
+}
+
+h1 {
+  font-size: var(--h1-font-size);
 }
 
 h1,
@@ -42,14 +58,40 @@ a {
   text-decoration: none;
 }
 
-.row, html body header .login-signup-profile a, html body header .login-signup-profile, html body header nav ul, html body header {
+a {
+  font-weight: 500;
+  font-size: 0.9rem;
+  position: relative;
+}
+a:after {
+  position: absolute;
+  content: "";
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  border-radius: 4px;
+  background-color: var(--color-secondary-1);
+  transition: all 0.3s ease;
+}
+a:hover {
+  color: var(--color-secondary-1);
+}
+a:hover::after {
+  width: 100%;
+  left: 0;
+  transform: translateX(0);
+}
+
+.row, html body main, html body header .login-signup-profile a, html body header .login-signup-profile, html body header nav ul, html body header {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 24px;
 }
 
-.column, html body {
+.column, html body main section, html body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -123,6 +165,9 @@ html body header .login-signup-profile a {
   height: 100%;
   min-width: 48px;
 }
+html body header .login-signup-profile a:after {
+  display: none;
+}
 html body header .login-signup-profile a img {
   height: 80%;
   aspect-ratio: 1;
@@ -170,4 +215,35 @@ html body header .login-signup-profile a img {
 html body main {
   order: 2;
   height: 92%;
+  gap: 0 !important;
+}
+html body main section {
+  width: 100%;
+  min-height: calc(92dvh - 24px);
+  flex-shrink: 0;
+  padding: 24px;
+  align-items: center;
+  justify-content: center;
+  overflow-y: scroll;
+}
+html body main section::-webkit-scrollbar {
+  width: 16px;
+}
+html body main section::-webkit-scrollbar-track {
+  background-color: var(--color-text-1);
+  background-clip: content-box;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+}
+html body main section::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary-1);
+  border-radius: 4px;
+}
+html body main section::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-button);
+}
+@media (max-width: 768px) {
+  html body main section::-webkit-scrollbar {
+    display: none;
+  }
 }
